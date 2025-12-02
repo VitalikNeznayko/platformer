@@ -1,18 +1,18 @@
-import { useState } from "react";
 import StartPage from "./pages/StartPage";
 import GamePage from "./pages/GamePage";
 import ResultPage from "./pages/ResultPage";
-import Title from "./components/UI/Title";
+import { useAppFlow, PAGES } from "./hooks/useAppFlow";
 
 function App() {
-  const [state, setState] = useState("start");
+  const { page, score, startGame, finishGame, restartGame } = useAppFlow();
 
   return (
     <div>
-      <Title text="Платформер" />
-      {state === "start" && <StartPage onStart={() => setState("game")} />}
-      {state === "game" && <GamePage onFinish={() => setState("result")} />}
-      {state === "result" && <ResultPage onRestart={() => setState("start")} />}
+      {page === PAGES.START && <StartPage onStart={startGame} />}
+      {page === PAGES.GAME && <GamePage onFinish={finishGame} />}
+      {page === PAGES.RESULT && (
+        <ResultPage score={score} onRestart={restartGame} />
+      )}
     </div>
   );
 }
