@@ -1,40 +1,9 @@
-body{
+body {
     margin: 0;
     background-color: rgb(42, 44, 65);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
+    font-family: sans-serif;
 }
-.level-info{
-    font-size: 20px;
-    text-align: center;
-}
-.title{
-    font-size: 40px;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.btn{
-    display: block;
-    margin: auto;
-    padding: 10px 20px;
-    font-size: 20px;
-    background-color: rgb(65, 142, 125);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}   
-.btn:hover{
-    background-color: rgb(52, 113, 100);
-}
-.game-board {
-    width: 1000px;
-    height: 500px;
-    background: #333;
-    border-radius: 10px;    
-}
-
-

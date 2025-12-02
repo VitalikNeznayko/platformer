@@ -1,3 +1,4 @@
+import styles from "../../styles/GameBoard.module.css";
 import LevelInfo from "./LevelInfo";
 import Money from "./Money";
 import Obstacle from "./Obstacle";
@@ -5,10 +6,10 @@ import Player from "./Player";
 
 const GameBoard = ({ level }) => {
   return (
-    <div className="game-board">
+    <div className={styles.GameBoard}>
       <LevelInfo level={level} />
       <div>
-      <Player />
+        <Player />
       </div>
       <Obstacle />
       <Money />

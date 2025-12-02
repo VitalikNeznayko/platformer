@@ -1,5 +1,7 @@
-const LevelInfo = ({level}) => {
-    return <div className="level-info">Рівень: {level}</div>;
+import styles from "../../styles/LevelInfo.module.css";
+
+const LevelInfo = ({ level }) => {
+  return <div className={styles.levelInfo}>Рівень: {level}</div>;
 };
 
 export default LevelInfo;
