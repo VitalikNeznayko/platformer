@@ -1,21 +1,20 @@
-import { useState } from "react";
 import GameBoard from "../components/Game/GameBoard";
 import Button from "../components/UI/Button";
+import { useGameLogic } from "../hooks/useGameLogic";
 
 const GamePage = ({ onFinish }) => {
-  const [level, setLevel] = useState(1);
-
-  const handleFinishLevel = () => {
-    if (level < 2) setLevel(level + 1);
-    else onFinish();
-  };
+  const { level, score, addScore, completeLevel } = useGameLogic(onFinish);
 
   return (
-    <div className="page game-page">
-      <GameBoard level={level} />
+    <div className="game-page">
+      <p>Level: {level}</p>
+      <p>Score: {score}</p>
+
+      <GameBoard level={level} score={score} onBonus={addScore} />
+
       <Button
-        text={level === 2 ? "Завершити гру" : `Перейти на рівень ${level + 1}`}
-        onClick={handleFinishLevel}
+        text={level === 2 ? "Finish Game" : `Next level (${level + 1})`}
+        onClick={completeLevel}
       />
     </div>
   );
