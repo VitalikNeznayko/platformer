@@ -1,4 +1,4 @@
-import styles from "../../styles/LevelInfo.module.css";
+import styles from "./LevelInfo.module.css";
 
 const LevelInfo = ({ level }) => {
   return <div className={styles.levelInfo}>Рівень: {level}</div>;
