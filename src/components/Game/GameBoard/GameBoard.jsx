@@ -1,13 +1,11 @@
 import styles from "./GameBoard.module.css";
-import LevelInfo from "../LevelInfo/LevelInfo";
-import Money from "../Money/Money";
-import Obstacle from "../Obstacle/Obstacle";
+import Obstacles from "../Obstacles/Obstacles";
 import Player from "../Player/Player";
 
-const GameBoard = ({ pos }) => {
-  console.log("GameBoard pos:", pos);
+const GameBoard = ({ pos, obstacles }) => {
   return (
     <div className={styles.board}>
+      <Obstacles obstacles={obstacles} />
       <Player pos={pos} />
     </div>
   );
