@@ -1,9 +1,10 @@
-import Button from "../components/UI/Button";
-import Title from "../components/UI/Title";
+import Button from "../components/UI/Button/Button";
+import Title from "../components/UI/Title/Title";
 
 const StartPage = ({ onStart }) => {
   return (
-    <div className="page start-page">
+    <div>
+      <Title text="Платформер" />
       <Button text="Почати гру" onClick={onStart} />
     </div>
   );

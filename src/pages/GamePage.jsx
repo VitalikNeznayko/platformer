@@ -1,22 +1,36 @@
-import { useState } from "react";
-import GameBoard from "../components/Game/GameBoard";
-import Button from "../components/UI/Button";
+import GameBoard from "../components/Game/GameBoard/GameBoard";
+import GameHUD from "../components/UI/GameHUD/GameHUD";
+import { useGameLogic } from "../hooks/useGameLogic";
 
 const GamePage = ({ onFinish }) => {
-  const [level, setLevel] = useState(1);
-
-  const handleFinishLevel = () => {
-    if (level < 2) setLevel(level + 1);
-    else onFinish();
-  };
+  const {
+    pos,
+    level,
+    money,
+    collected,
+    totalCoins,
+    time,
+    obstacles,
+    deadly,
+    exitDoor,
+  } = useGameLogic(onFinish);
 
   return (
-    <div className="page game-page">
-      <GameBoard level={level} />
-      <Button
-        text={level === 2 ? "Завершити гру" : `Перейти на рівень ${level + 1}`}
-        onClick={handleFinishLevel}
-      />
+    <div>
+        <GameHUD
+          level={level}
+          collected={collected}
+          total={totalCoins}
+          time={time}
+        />
+
+        <GameBoard
+          pos={pos}
+          obstacles={obstacles}
+          deadly={deadly}
+          money={money}
+          exitDoor={exitDoor}
+        />
     </div>
   );
 };
