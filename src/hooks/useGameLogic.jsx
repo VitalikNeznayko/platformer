@@ -1,68 +1,58 @@
-import { useEffect } from "react";
-import { useScore } from "./useScore";
+import { useEffect, useState } from "react";
 import { useLevelFlow } from "./useLevelFlow";
 import { usePlayerMovement } from "./usePlayerMovement";
 import { useMoney } from "./useMoney";
 import { useDeadlyCollisions } from "./useDeadlyCollisions";
 import { useExitDoor } from "./useExitDoor";
 
-export const useGameLogic = (
-  onFinish,
-  obstacles = [],
-  deadly = [],
-  exitDoor
-) => {
-  const { score, addScore, resetScore } = useScore();
+export const useGameLogic = (onFinish, obstacles, deadly, exitDoor) => {
   const { level, nextLevel } = useLevelFlow(onFinish);
   const { pos, setPos } = usePlayerMovement(obstacles);
-  const { money, setMoney, updateMoney } = useMoney(addScore);
 
-  const exitActive = money.length === 0;
+  const { money, setMoney, updateMoney, collected, resetCollected } =
+    useMoney();
+
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
-    setMoney([
-      { id: 1, x: 200, y: 580 },
-      { id: 2, x: 400, y: 480 },
-      { id: 3, x: 700, y: 580 },
-    ]);
+    const interval = setInterval(() => setTime((t) => t + 1), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    resetCollected();
+    setTime(0);
+
+      setMoney([
+        { id: 1, x: 200, y: 680 },
+        { id: 2, x: 400, y: 580 },
+        { id: 3, x: 700, y: 720 },
+        { id: 4, x: 700, y: 480 },
+      ]);
+
   }, [level]);
 
   useEffect(() => {
     updateMoney(pos);
   }, [pos]);
 
-  const restartLevel = () => {
-    resetScore();
-    setPos({ x: 100, y: 610 });
-    setMoney([
-      { id: 1, x: 200, y: 580 },
-      { id: 2, x: 400, y: 480 },
-      { id: 3, x: 700, y: 580 },
-    ]);
-  };
+  useDeadlyCollisions(pos, deadly, () => setPos({ x: 100, y: 610 }));
 
-  useDeadlyCollisions(pos, deadly, restartLevel);
-
-  useExitDoor(
-    pos,
-    exitDoor,
-    () => {
-      nextLevel(score);
+  useExitDoor(pos, exitDoor, () => {
+    if (collected === money.length + collected) {
+      nextLevel();
       setPos({ x: 100, y: 610 });
-    },
-    exitActive
-  );
+    }
+  });
+
+  const totalCoins = money.length + collected;
 
   return {
     pos,
     level,
-    score,
     money,
-    nextLevel:() => {
-      nextLevel(score);
-      setPos({ x: 100, y: 610 });
-      
-    } 
+    collected,
+    totalCoins,
+    time,
   };
 };
-

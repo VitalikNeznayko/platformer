@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-export const useMoney = (addScore) => {
+export const useMoney = () => {
   const [money, setMoney] = useState([]);
+  const [collected, setCollected] = useState(0);
+
+  const collectedSet = useRef(new Set());
 
   const coinSize = 20;
   const playerSize = 40;
 
-  const isColliding = (p, c) =>
+  const checkCollision = (p, c) =>
     p.x < c.x + coinSize &&
     p.x + playerSize > c.x &&
     p.y < c.y + coinSize &&
@@ -14,15 +17,24 @@ export const useMoney = (addScore) => {
 
   const updateMoney = (playerPos) => {
     setMoney((prev) =>
-      prev.filter((coin) => {
-        if (isColliding(playerPos, coin)) {
-          addScore(1);
+      prev.filter((m) => {
+        if (collectedSet.current.has(m.id)) return false;
+
+        if (checkCollision(playerPos, m)) {
+          collectedSet.current.add(m.id); 
+          setCollected((c) => c + 1); 
           return false;
         }
+
         return true;
       })
     );
   };
 
-  return { money, setMoney, updateMoney };
+   const resetCollected = () => {
+     setCollected(0);
+     collectedSet.current.clear();
+   };
+
+  return { money, setMoney, updateMoney, collected, resetCollected };
 };

@@ -10,7 +10,6 @@ export const useExitDoor = (pos, exitZone, onExit, isActive) => {
     p.y + playerSize > z.y;
 
   useEffect(() => {
-    if (!isActive) return;
     if (exitZone && collide(pos, exitZone)) {
       onExit();
     }

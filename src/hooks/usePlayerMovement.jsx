@@ -19,8 +19,8 @@ export const usePlayerMovement = (obstacles = []) => {
 
   const playerSize = 40;
   const mapLeft = 0;
-  const mapRight = 1160;
-  const groundY = 610;
+  const mapRight = 1560;
+  const groundY = 760;
 
   const speed = 4;
   const jumpForce = 9;

@@ -1,22 +1,22 @@
 import GameBoard from "../components/Game/GameBoard/GameBoard";
+import GameHUD from "../components/UI/GameHUD/GameHUD";
 import Button from "../components/UI/Button/Button";
 import { useGameLogic } from "../hooks/useGameLogic";
 
 const obstacles = [
-  { x: 300, y: 550, width: 150, height: 70 },
-  { x: 700, y: 500, width: 200, height: 50 },
+  { x: 300, y: 700, width: 150, height: 70 },
+  { x: 700, y: 650, width: 200, height: 50 },
 ];
 
 const deadly = [
-  { id: 100, x: 500, y: 580, width: 40, height: 30 },
-  { id: 101, x: 900, y: 580, width: 40, height: 30 },
+  { id: 100, x: 500, y: 720, width: 40, height: 30 },
+  { id: 101, x: 900, y: 720, width: 40, height: 30 },
 ];
 
-const exitDoor = { x: 1100, y: 560, width: 40, height: 80 };
-
+const exitDoor = { x: 1100, y: 700, width: 40, height: 80 };
 
 const GamePage = ({ onFinish }) => {
-  const { pos, score, level, money, nextLevel } = useGameLogic(
+  const { pos, level, money, collected, totalCoins, time } = useGameLogic(
     onFinish,
     obstacles,
     deadly,
@@ -25,21 +25,20 @@ const GamePage = ({ onFinish }) => {
 
   return (
     <div>
-      <p>Level: {level}</p>
-      <p>Score: {score}</p>
+        <GameHUD
+          level={level}
+          collected={collected}
+          total={totalCoins}
+          time={time}
+        />
 
-      <GameBoard
-        pos={pos}
-        obstacles={obstacles}
-        deadly={deadly}
-        money={money}
-        exitDoor={exitDoor}
-      />
-
-      <Button
-        text={level === 2 ? "Finish Game" : `Next level (${level + 1})`}
-        onClick={nextLevel}
-      />
+        <GameBoard
+          pos={pos}
+          obstacles={obstacles}
+          deadly={deadly}
+          money={money}
+          exitDoor={exitDoor}
+        />
     </div>
   );
 };
