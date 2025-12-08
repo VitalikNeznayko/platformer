@@ -12,11 +12,15 @@ const deadly = [
   { id: 101, x: 900, y: 580, width: 40, height: 30 },
 ];
 
+const exitDoor = { x: 1100, y: 560, width: 40, height: 80 };
+
+
 const GamePage = ({ onFinish }) => {
   const { pos, score, level, money, nextLevel } = useGameLogic(
     onFinish,
     obstacles,
-    deadly
+    deadly,
+    exitDoor
   );
 
   return (
@@ -24,7 +28,13 @@ const GamePage = ({ onFinish }) => {
       <p>Level: {level}</p>
       <p>Score: {score}</p>
 
-      <GameBoard pos={pos} obstacles={obstacles} deadly={deadly} money={money} />
+      <GameBoard
+        pos={pos}
+        obstacles={obstacles}
+        deadly={deadly}
+        money={money}
+        exitDoor={exitDoor}
+      />
 
       <Button
         text={level === 2 ? "Finish Game" : `Next level (${level + 1})`}

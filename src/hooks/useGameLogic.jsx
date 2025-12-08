@@ -4,12 +4,20 @@ import { useLevelFlow } from "./useLevelFlow";
 import { usePlayerMovement } from "./usePlayerMovement";
 import { useMoney } from "./useMoney";
 import { useDeadlyCollisions } from "./useDeadlyCollisions";
+import { useExitDoor } from "./useExitDoor";
 
-export const useGameLogic = (onFinish, obstacles = [], deadly = []) => {
+export const useGameLogic = (
+  onFinish,
+  obstacles = [],
+  deadly = [],
+  exitDoor
+) => {
   const { score, addScore, resetScore } = useScore();
   const { level, nextLevel } = useLevelFlow(onFinish);
   const { pos, setPos } = usePlayerMovement(obstacles);
   const { money, setMoney, updateMoney } = useMoney(addScore);
+
+  const exitActive = money.length === 0;
 
   useEffect(() => {
     setMoney([
@@ -24,8 +32,8 @@ export const useGameLogic = (onFinish, obstacles = [], deadly = []) => {
   }, [pos]);
 
   const restartLevel = () => {
-    resetScore(); 
-    setPos({ x: 100, y: 610 }); 
+    resetScore();
+    setPos({ x: 100, y: 610 });
     setMoney([
       { id: 1, x: 200, y: 580 },
       { id: 2, x: 400, y: 480 },
@@ -35,16 +43,26 @@ export const useGameLogic = (onFinish, obstacles = [], deadly = []) => {
 
   useDeadlyCollisions(pos, deadly, restartLevel);
 
-  const goNextLevel = () => {
-    nextLevel(score);
-    setPos({ x: 100, y: 610 });
-  };
+  useExitDoor(
+    pos,
+    exitDoor,
+    () => {
+      nextLevel(score);
+      setPos({ x: 100, y: 610 });
+    },
+    exitActive
+  );
 
   return {
     pos,
     level,
     score,
     money,
-    nextLevel: goNextLevel,
+    nextLevel:() => {
+      nextLevel(score);
+      setPos({ x: 100, y: 610 });
+      
+    } 
   };
 };
+

@@ -1,4 +1,5 @@
 .danger {
     position: absolute;
     background: red;
+    box-shadow: 0 0 15px red;
 }

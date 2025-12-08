@@ -11,5 +11,8 @@ export const useLevelFlow = (onFinish) => {
     }
   };
 
-  return { level, nextLevel };
+  const goToLevel = (n) => {
+    setLevel(n);
+  };
+  return { level, nextLevel, goToLevel };
 };

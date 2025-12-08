@@ -1,0 +1,31 @@
+.door {
+    position: absolute;
+    width: 50px;
+    height: 80px;
+    border-radius: 6px;
+    z-index: 5;
+    transition: 0.3s;
+}
+
+.inactive {
+    background: #4b4b4b;
+    border: 3px solid #777;
+    opacity: 0.5;
+}
+
+.active {
+    background: #3b2f5a;
+    border: 3px solid #d1baff;
+    box-shadow: 0 0 20px #e0ccff;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px #b08cff;
+    }
+
+    to {
+        box-shadow: 0 0 20px #e0ccff;
+    }
+}
