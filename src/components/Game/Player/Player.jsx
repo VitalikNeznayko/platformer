@@ -1,7 +1,6 @@
 import styles from "./Player.module.css";
 
 const Player = ({ pos }) => {
-  console.log("Player props:", pos);
   return (
     <div
       className={styles.player}

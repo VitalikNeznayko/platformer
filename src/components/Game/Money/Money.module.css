@@ -1,0 +1,11 @@
+.money {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: gold;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ffdd00;
+    border: 2px solid #f2c200;
+    animation: spin 1s infinite linear;
+    z-index: 10;
+}
