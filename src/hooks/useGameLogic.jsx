@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
+import { LEVELS } from "../config/levels";
+
 import { useLevelFlow } from "./useLevelFlow";
 import { usePlayerMovement } from "./usePlayerMovement";
 import { useMoney } from "./useMoney";
 import { useDeadlyCollisions } from "./useDeadlyCollisions";
 import { useExitDoor } from "./useExitDoor";
 
-export const useGameLogic = (onFinish, obstacles, deadly, exitDoor) => {
+export const useGameLogic = (onFinish) => {
   const { level, nextLevel } = useLevelFlow(onFinish);
-  const { pos, setPos } = usePlayerMovement(obstacles);
+  const config = LEVELS[level];
+
+  const { pos, setPos } = usePlayerMovement(
+    config.obstacles,
+    config.playerStart
+  );
 
   const { money, setMoney, updateMoney, collected, resetCollected } =
     useMoney();
@@ -23,29 +30,28 @@ export const useGameLogic = (onFinish, obstacles, deadly, exitDoor) => {
     resetCollected();
     setTime(0);
 
-      setMoney([
-        { id: 1, x: 200, y: 680 },
-        { id: 2, x: 400, y: 580 },
-        { id: 3, x: 700, y: 720 },
-        { id: 4, x: 700, y: 480 },
-      ]);
-
+    setMoney(config.money);
+    setPos(config.playerStart);
   }, [level]);
 
   useEffect(() => {
     updateMoney(pos);
   }, [pos]);
 
-  useDeadlyCollisions(pos, deadly, () => setPos({ x: 100, y: 610 }));
+  useDeadlyCollisions(pos, config.deadly, () => {
+    resetCollected();
+    setMoney(config.money);
+    setPos(config.playerStart);
+  });
 
-  useExitDoor(pos, exitDoor, () => {
-    if (collected === money.length + collected) {
-      nextLevel();
-      setPos({ x: 100, y: 610 });
+  useExitDoor(pos, config.exitDoor, () => {
+    const totalCoins = config.money.length;
+    if (collected === totalCoins) {
+      nextLevel(level);
     }
   });
 
-  const totalCoins = money.length + collected;
+  const totalCoins = config.money.length;
 
   return {
     pos,
@@ -53,6 +59,9 @@ export const useGameLogic = (onFinish, obstacles, deadly, exitDoor) => {
     money,
     collected,
     totalCoins,
+    obstacles: config.obstacles,
+    deadly: config.deadly,
+    exitDoor: config.exitDoor,
     time,
   };
 };

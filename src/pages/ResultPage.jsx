@@ -1,7 +1,7 @@
 import Title from "../components/UI/Title/Title";
 import Button from "../components/UI/Button/Button";
 
-const ResultPage = ({ score, onRestart }) => {
+const ResultPage = ({ onRestart }) => {
   return (
     <div>
       <Title text="Гру завершено!" />   

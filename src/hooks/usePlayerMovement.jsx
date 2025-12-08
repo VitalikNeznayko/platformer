@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useKeyboardControls } from "./useKeyboardControls";
 
-export const usePlayerMovement = (obstacles = []) => {
+export const usePlayerMovement = (obstacles = [], startPos) => {
   const keys = useKeyboardControls();
 
-  const [pos, setPos] = useState({ x: 100, y: 610 });
+  const [pos, setPos] = useState(startPos);
   const posRef = useRef(pos);
   useEffect(() => {
     posRef.current = pos;

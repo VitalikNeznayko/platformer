@@ -5,4 +5,5 @@
     height: 800px;
     background: #2a2c41;
     border: 2px solid #444;
+    overflow: hidden;
 }   

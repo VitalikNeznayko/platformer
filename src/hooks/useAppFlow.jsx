@@ -8,26 +8,21 @@ export const PAGES = {
 
 export const useAppFlow = () => {
   const [page, setPage] = useState(PAGES.START);
-  const [score, setScore] = useState(0); 
 
   const startGame = () => {
-    setScore(0);
     setPage(PAGES.GAME);
   };
 
-  const finishGame = (finalScore) => {
-    setScore(finalScore);
+  const finishGame = () => {
     setPage(PAGES.RESULT); 
   };
 
   const restartGame = () => {
-    setScore(0);
     setPage(PAGES.START);
   };
 
   return {
     page,
-    score,
     startGame,
     finishGame,
     restartGame,

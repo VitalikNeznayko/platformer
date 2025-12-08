@@ -1,18 +1,22 @@
 import { useState } from "react";
+import { LEVELS } from "../config/levels";
 
 export const useLevelFlow = (onFinish) => {
   const [level, setLevel] = useState(1);
 
-  const nextLevel = (score) => {
-    if (level === 1) {
-      setLevel(2);
+  const nextLevel = (currentLevel) => {
+    const maxLevel = Object.keys(LEVELS).length;
+
+    if (currentLevel < maxLevel) {
+      setLevel(currentLevel + 1);
     } else {
-      onFinish(score);
+      onFinish(); 
     }
   };
 
   const goToLevel = (n) => {
-    setLevel(n);
+    if (LEVELS[n]) setLevel(n);
   };
+
   return { level, nextLevel, goToLevel };
 };

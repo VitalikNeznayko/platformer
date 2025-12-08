@@ -1,6 +1,4 @@
 .obstacle {
     position: absolute;
     background: #4b5563;
-    border: 2px solid #2f3542;
-    border-radius: 4px;
 }
