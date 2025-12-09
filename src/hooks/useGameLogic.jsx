@@ -6,10 +6,11 @@ import { usePlayerMovement } from "./usePlayerMovement";
 import { useMoney } from "./useMoney";
 import { useDeadlyCollisions } from "./useDeadlyCollisions";
 import { useExitDoor } from "./useExitDoor";
-import { useSettings } from "../context/SettingsContext";
+import { useSettingsStore } from "../store/SettingsStore";
+
 
 export const useGameLogic = (onFinish) => {
-  const { settings } = useSettings();
+  const { settings } = useSettingsStore();
   const [timerKey, setTimerKey] = useState(0);
   const { level, nextLevel, restartGame } = useLevelFlow(onFinish);
   const config = LEVELS[level];

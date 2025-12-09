@@ -1,6 +1,6 @@
 import { Formik, Form, Field, useFormikContext } from "formik";
 import { SettingsSchema } from "../../validation/SettingsSchema";
-import { useSettings } from "../../context/SettingsContext";
+import { useSettingsStore } from "../../store/SettingsStore";
 import { difficultyPresets } from "../../config/difficulty";
 import Button from "../UI/Button/Button";
 import { useEffect } from "react";
@@ -22,7 +22,7 @@ const PresetSync = () => {
 };
 
 const SettingsForm = ({ onBack }) => {
-  const { settings, setSettings } = useSettings();
+  const { settings, setSettings } = useSettingsStore();
 
   const initialValues = { ...settings };
 
@@ -55,37 +55,36 @@ const SettingsForm = ({ onBack }) => {
               </div>
             </section>
 
-              <section className={styles.customSection}>
-                <h3 className={styles.sectionTitle}>Custom Settings</h3>
+            <section className={styles.customSection}>
+              <h3 className={styles.sectionTitle}>Custom Settings</h3>
 
-                <div className={styles.checkboxGroup}>
-                  <label>
-                    <Field type="checkbox" name="coinsRequired" /> Coins
-                    required
-                  </label>
+              <div className={styles.checkboxGroup}>
+                <label>
+                  <Field type="checkbox" name="coinsRequired" /> Coins required
+                </label>
 
-                  <label>
-                    <Field type="checkbox" name="timeLimited" /> Time limited
-                  </label>
-                </div>
+                <label>
+                  <Field type="checkbox" name="timeLimited" /> Time limited
+                </label>
+              </div>
 
-                {values.timeLimited && (
-                  <>
-                    <Field
-                      type="number"
-                      name="timeLimit"
-                      min={5}
-                      max={600}
-                      placeholder="Time in seconds"
-                      className={styles.numberInput}
-                    />
+              {values.timeLimited && (
+                <>
+                  <Field
+                    type="number"
+                    name="timeLimit"
+                    min={5}
+                    max={600}
+                    placeholder="Time in seconds"
+                    className={styles.numberInput}
+                  />
 
-                    {errors.timeLimit && touched.timeLimit && (
-                      <div className={styles.errorText}>{errors.timeLimit}</div>
-                    )}
-                  </>
-                )}
-              </section>
+                  {errors.timeLimit && touched.timeLimit && (
+                    <div className={styles.errorText}>{errors.timeLimit}</div>
+                  )}
+                </>
+              )}
+            </section>
           </div>
 
           <div className={styles.buttons}>
