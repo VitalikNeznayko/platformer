@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import GameBoard from "../components/Game/GameBoard/GameBoard";
-import GameHUD from "../components/UI/GameHUD/GameHUD";
-import GameOverModal from "../components/UI/Modal/GameOverModal";
+import GameBoard from "../../components/Game/GameBoard/GameBoard";
+import GameHUD from "../../components/UI/GameHUD/GameHUD";
+import GameOverModal from "../../components/UI/Modal/GameOverModal";
 import { useState } from "react";
-import { useGameLogic } from "../hooks/useGameLogic";
+import { useGameLogic } from "../../hooks/useGameLogic";
 
 const GamePage = () => {
   const navigate = useNavigate();
@@ -46,7 +46,10 @@ const GamePage = () => {
       <GameOverModal
         isOpen={showModal}
         message={gameOverMessage}
-        onRestart={() => { restart(); navigate("/game"); setShowModal(false);}}
+        onRestart={() => {
+          restart();
+          setShowModal(false);
+        }}
         onMenu={() => navigate("/")}
       />
     </div>

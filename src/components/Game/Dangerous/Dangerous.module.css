@@ -1,4 +1,32 @@
 .danger {
     position: absolute;
-    background: red;
+    background: #d72638;
+    border: 2px solid #8b1a24;
+    border-radius: 4px;
+
+    box-shadow:
+        0 0 12px rgba(215, 38, 56, 0.8),
+        inset 0 0 6px rgba(255, 255, 255, 0.3);
+
+    animation: pulse 5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow:
+            0 0 6px rgba(215, 38, 56, 0.5),
+            inset 0 0 4px rgba(255, 255, 255, 0.1);
+    }
+
+    50% {
+        box-shadow:
+            0 0 14px rgba(255, 60, 80, 1),
+            inset 0 0 6px rgba(255, 255, 255, 0.2);
+    }
+
+    100% {
+        box-shadow:
+            0 0 6px rgba(215, 38, 56, 0.5),
+            inset 0 0 4px rgba(255, 255, 255, 0.1);
+    }
 }

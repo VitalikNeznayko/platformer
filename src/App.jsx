@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { getUserId } from "./utils/getUserId";
 
-import StartPage from "./pages/StartPage";
-import GamePage from "./pages/GamePage";
-import SettingPage from "./pages/SettingPage";
+import StartPage from "./pages/StartPage/StartPage";
+import GamePage from "./pages/GamePage/GamePage";
+import SettingPage from "./pages/SettingPage/SettingPage";
 
 function App() {
   const userId = getUserId();

@@ -1,11 +1,32 @@
 .money {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background: gold;
+    width: 28px;
+    height: 28px;
+
+    background: radial-gradient(circle at 30% 30%, #ffe27a, #ffb800);
     border-radius: 50%;
-    box-shadow: 0 0 10px #ffdd00;
-    border: 2px solid #f2c200;
-    animation: spin 1s infinite linear;
-    z-index: 10;
+    border: 2px solid #e0a200;
+
+    box-shadow:
+        0 0 10px rgba(255, 196, 0, 0.8),
+        inset 0 0 6px rgba(255, 255, 255, 0.5);
+
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+        box-shadow: 0 0 10px rgba(255, 196, 0, 0.7);
+    }
+
+    50% {
+        transform: translateY(-6px);
+        box-shadow: 0 0 16px rgba(255, 196, 0, 1);
+    }
+
+    100% {
+        transform: translateY(0px);
+        box-shadow: 0 0 10px rgba(255, 196, 0, 0.7);
+    }
 }

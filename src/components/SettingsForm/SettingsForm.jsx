@@ -4,6 +4,7 @@ import { useSettings } from "../../context/SettingsContext";
 import { difficultyPresets } from "../../config/difficulty";
 import Button from "../UI/Button/Button";
 import { useEffect } from "react";
+import styles from "./SettingsForm.module.css";
 
 const PresetSync = () => {
   const { values, setFieldValue } = useFormikContext();
@@ -37,53 +38,57 @@ const SettingsForm = ({ onBack }) => {
       onSubmit={handleSubmit}
     >
       {({ values, errors, touched }) => (
-        <Form style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {/* Синхронізація пресетів */}
+        <Form className={styles.form}>
           <PresetSync />
 
-          <section>
-            <h3>Difficulty</h3>
+          <div className={styles.sections}>
+            <section className={styles.section}>
+              <h3 className={styles.sectionTitle}>Difficulty</h3>
 
-            {["easy", "normal", "hard", "custom"].map((d) => (
-              <label key={d}>
-                <Field type="radio" name="difficulty" value={d} />
-                {d.charAt(0).toUpperCase() + d.slice(1)}
-              </label>
-            ))}
-          </section>
-
-          {values.difficulty === "custom" && (
-            <section style={{ paddingLeft: 20 }}>
-              <h3>Custom Settings</h3>
-
-              <label>
-                <Field type="checkbox" name="coinsRequired" />
-                Coins required
-              </label>
-
-              <label>
-                <Field type="checkbox" name="timeLimited" />
-                Time limited
-              </label>
-
-              {values.timeLimited && (
-                <>
-                  <Field
-                    type="number"
-                    name="timeLimit"
-                    min={5}
-                    max={600}
-                    placeholder="Time in seconds"
-                  />
-                  {errors.timeLimit && touched.timeLimit && (
-                    <div style={{ color: "red" }}>{errors.timeLimit}</div>
-                  )}
-                </>
-              )}
+              <div className={styles.radioGroup}>
+                {["easy", "normal", "hard", "custom"].map((d) => (
+                  <label key={d}>
+                    <Field type="radio" name="difficulty" value={d} />{" "}
+                    {d.charAt(0).toUpperCase() + d.slice(1)}
+                  </label>
+                ))}
+              </div>
             </section>
-          )}
 
-          <div style={{ display: "flex", gap: 12 }}>
+              <section className={styles.customSection}>
+                <h3 className={styles.sectionTitle}>Custom Settings</h3>
+
+                <div className={styles.checkboxGroup}>
+                  <label>
+                    <Field type="checkbox" name="coinsRequired" /> Coins
+                    required
+                  </label>
+
+                  <label>
+                    <Field type="checkbox" name="timeLimited" /> Time limited
+                  </label>
+                </div>
+
+                {values.timeLimited && (
+                  <>
+                    <Field
+                      type="number"
+                      name="timeLimit"
+                      min={5}
+                      max={600}
+                      placeholder="Time in seconds"
+                      className={styles.numberInput}
+                    />
+
+                    {errors.timeLimit && touched.timeLimit && (
+                      <div className={styles.errorText}>{errors.timeLimit}</div>
+                    )}
+                  </>
+                )}
+              </section>
+          </div>
+
+          <div className={styles.buttons}>
             <Button type="submit" text="Save" />
             <Button onClick={onBack} text="Back" />
           </div>
