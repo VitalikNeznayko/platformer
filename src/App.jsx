@@ -1,18 +1,20 @@
 import StartPage from "./pages/StartPage";
 import GamePage from "./pages/GamePage";
-import ResultPage from "./pages/ResultPage";
+import SettingPage from "./pages/SettingPage";
 import { useAppFlow, PAGES } from "./hooks/useAppFlow";
 
 function App() {
-  const { page, score, startGame, finishGame, restartGame } = useAppFlow();
+  const { page, startGame, settingGame, restartGame, menuGame } = useAppFlow();
 
   return (
     <div>
-      {page === PAGES.START && <StartPage onStart={startGame} />}
-      {page === PAGES.GAME && <GamePage onFinish={finishGame} />}
-      {page === PAGES.RESULT && (
-        <ResultPage score={score} onRestart={restartGame} />
+      {page === PAGES.START && (
+        <StartPage onStart={startGame} onSetting={settingGame} />
       )}
+      {page === PAGES.GAME && (
+        <GamePage onBack={menuGame} onRestart={restartGame} />
+      )}
+      {page === PAGES.SETTING && <SettingPage onBack={menuGame} />}
     </div>
   );
 }

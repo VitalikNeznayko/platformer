@@ -80,7 +80,7 @@ export const LEVELS = {
       { id: 3, x: 1320, y: 350, width: 40, height: 40 },
       { id: 4, x: 700, y: -10, width: 40, height: 90 },
       { id: 5, x: 360, y: 260, width: 40, height: 200 },
-      { id: 6, x: 1000, y: 180, width: 40, height: 40 },
+      { id: 6, x: 1000, y: 173, width: 40, height: 40 },
       { id: 7, x: 750, y: 350, width: 150, height: 40 },
       { id: 9, x: 540, y: 490, width: 40, height: 40 },
       { id: 10, x: 0, y: 480, width: 40, height: 40 },
