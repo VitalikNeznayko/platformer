@@ -4,7 +4,6 @@ export const PAGES = {
   START: "start",
   GAME: "game",
   SETTING: "setting",
-  RESULT: "result",
 };
 
 export const useAppFlow = () => {
@@ -12,9 +11,9 @@ export const useAppFlow = () => {
     return localStorage.getItem("appPage") || PAGES.START;
   });
 
-   useEffect(() => {
-     localStorage.setItem("appPage", page);
-   }, [page]);
+  useEffect(() => {
+    localStorage.setItem("appPage", page);
+  }, [page]);
 
   const startGame = () => {
     setPage(PAGES.GAME);
@@ -24,19 +23,20 @@ export const useAppFlow = () => {
     setPage(PAGES.SETTING);
   };
 
-  const finishGame = () => {
-    setPage(PAGES.RESULT);
-  };
-
   const menuGame = () => {
     setPage(PAGES.START);
+  };
+
+  const restartGame = () => {
+    setPage(PAGES.GAME);
+    window.location.reload();
   };
 
   return {
     page,
     startGame,
     settingGame,
-    finishGame,
     menuGame,
+    restartGame,
   };
 };
