@@ -17,6 +17,9 @@ export const useLevelFlow = (onFinish) => {
   const goToLevel = (n) => {
     if (LEVELS[n]) setLevel(n);
   };
+   const restartGame = () => {
+     setLevel(1);
+   };
 
-  return { level, nextLevel, goToLevel };
+  return { level, nextLevel, goToLevel, restartGame };
 };

@@ -1,0 +1,36 @@
+.wrapper {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel {
+    background: #1c1c24;
+    padding: 40px 50px;
+    border-radius: 14px;
+    border: 2px solid #2d2d3a;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 360px;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #f5f5f5;
+    text-transform: uppercase;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 200px;
+}

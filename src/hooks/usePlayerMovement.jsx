@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useKeyboardControls } from "./useKeyboardControls";
 
-export const usePlayerMovement = (obstacles = [], startPos) => {
+export const usePlayerMovement = (
+  obstacles = [],
+  startPos,
+  isBlocked = false
+) => {
   const keys = useKeyboardControls();
 
   const [pos, setPos] = useState(startPos);
@@ -42,6 +46,12 @@ export const usePlayerMovement = (obstacles = [], startPos) => {
     let frame;
 
     const loop = () => {
+      if (isBlocked) {
+        vel.current.x = 0;
+        vel.current.y = 0;
+        frame = requestAnimationFrame(loop);
+        return;
+      }
       const k = keysRef.current;
       const prev = posRef.current;
 
@@ -121,7 +131,7 @@ export const usePlayerMovement = (obstacles = [], startPos) => {
 
     frame = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(frame);
-  }, [obstacles]);
+  }, [obstacles, isBlocked]);
 
   return { pos, setPos };
 };
