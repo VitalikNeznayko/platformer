@@ -11,7 +11,8 @@ const GameBoard = ({
   obstacles = [],
   deadly = [],
   money = [],
-  exitDoor
+  exitDoor,
+  exitActive,
 }) => {
   return (
     <div className={styles.board}>
@@ -28,7 +29,7 @@ const GameBoard = ({
       ))}
 
       {exitDoor && (
-        <ExitDoor x={exitDoor.x} y={exitDoor.y} active={money.length === 0} />
+        <ExitDoor x={exitDoor.x} y={exitDoor.y} active={exitActive} />
       )}
 
       <Player pos={pos} />
