@@ -1,11 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import Title from "../components/UI/Title/Title";
 import SettingsForm from "../components/SettingsForm/SettingsForm";
 
-const SettingsPage = ({ onBack }) => {
+const SettingsPage = () => {
+  const navigate = useNavigate();
   return (
     <div style={{ padding: 20 }}>
       <Title text="Game Settings" />
-      <SettingsForm onBack={onBack} />
+      <SettingsForm onBack={() => navigate("/")} />
     </div>
   );
 };

@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import GameBoard from "../components/Game/GameBoard/GameBoard";
 import GameHUD from "../components/UI/GameHUD/GameHUD";
 import GameOverModal from "../components/UI/Modal/GameOverModal";
 import { useState } from "react";
 import { useGameLogic } from "../hooks/useGameLogic";
 
-const GamePage = ({ onBack, onRestart }) => {
+const GamePage = () => {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
   const {
@@ -19,6 +21,7 @@ const GamePage = ({ onBack, onRestart }) => {
     exitDoor,
     exitActive,
     gameOverMessage,
+    restart,
   } = useGameLogic(() => setShowModal(true));
 
   return (
@@ -28,7 +31,7 @@ const GamePage = ({ onBack, onRestart }) => {
         collected={collected}
         total={totalCoins}
         time={time}
-        onBack={onBack}
+        onBack={() => navigate("/")}
       />
 
       <GameBoard
@@ -42,9 +45,9 @@ const GamePage = ({ onBack, onRestart }) => {
 
       <GameOverModal
         isOpen={showModal}
-        onRestart={onRestart}
         message={gameOverMessage}
-        onMenu={onBack}
+        onRestart={() => { restart(); navigate("/game"); setShowModal(false);}}
+        onMenu={() => navigate("/")}
       />
     </div>
   );

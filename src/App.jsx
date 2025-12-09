@@ -1,21 +1,23 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { getUserId } from "./utils/getUserId";
+
 import StartPage from "./pages/StartPage";
 import GamePage from "./pages/GamePage";
 import SettingPage from "./pages/SettingPage";
-import { useAppFlow, PAGES } from "./hooks/useAppFlow";
 
 function App() {
-  const { page, startGame, settingGame, restartGame, menuGame } = useAppFlow();
+  const userId = getUserId();
 
   return (
-    <div>
-      {page === PAGES.START && (
-        <StartPage onStart={startGame} onSetting={settingGame} />
-      )}
-      {page === PAGES.GAME && (
-        <GamePage onBack={menuGame} onRestart={restartGame} />
-      )}
-      {page === PAGES.SETTING && <SettingPage onBack={menuGame} />}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<StartPage userId={userId} />} />
+
+        <Route path="/:id" element={<StartPage />} />
+        <Route path="/:id/game" element={<GamePage />} />
+        <Route path="/:id/settings" element={<SettingPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
