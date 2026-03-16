@@ -1,6 +1,19 @@
 import React from "react";
 import CookieConsent from "react-cookie-consent";
 
+/**
+ * @module Cookies
+ */
+
+/**
+ * GDPRPopup component for displaying a cookie consent popup to users
+ *
+ * @param {Object} props - Component props
+ * @param {string} [props.buttonText="Прийняти всі"] - Accept button text
+ * @param {string} [props.declineButtonText="Відхилити"] - Decline button text
+ * @param {boolean} [props.overlay=false] - Enables background overlay
+ * @returns {JSX.Element}
+ */
 const GDPRPopup = ({
   buttonText = "Прийняти всі",
   declineButtonText = "Відхилити",

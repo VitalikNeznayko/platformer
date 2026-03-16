@@ -1,12 +1,24 @@
-import { useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/UI/Button/Button";
 import Title from "../../components/UI/Title/Title";
 import styles from "./StartPage.module.css";
 
+/**
+ * @module Pages
+ */
+
+/**
+ * StartPage component for displaying the main menu and allowing users to start the game or access settings
+ *
+ * @param {Object} props - Component props
+ * @param {string} [props.userId] - Optional user ID
+ * @returns {JSX.Element}
+ */
 const StartPage = ({ userId }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const currentUserId = id || userId;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.panel}>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: hooks/usePlayerMovement.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: hooks/usePlayerMovement.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useRef, useState } from "react";
+import { useKeyboardControls } from "./useKeyboardControls";
+/**
+ * @module Hooks
+ */
+
+/**
+ * usePlayerMovement hook for managing player movement in the game
+ *
+ * @param {Array&lt;Object>} [obstacles=[]] - Array of obstacle objects
+ * @param {Object} startPos - Starting position of the player {x, y}
+ * @param {boolean} [isBlocked=false] - Disable movement if true
+ * @returns {Object} - Hook API
+ * @returns {Object} return.pos - Current player position {x, y}
+ * @returns {Function} return.setPos - Setter for player position
+ */
+export const usePlayerMovement = (
+  obstacles = [],
+  startPos,
+  isBlocked = false
+) => {
+  const keys = useKeyboardControls();
+
+  const [pos, setPos] = useState(startPos);
+  const posRef = useRef(pos);
+  useEffect(() => {
+    posRef.current = pos;
+  }, [pos]);
+
+  const keysRef = useRef(keys);
+  useEffect(() => {
+    keysRef.current = keys;
+  }, [keys]);
+
+  const vel = useRef({ x: 0, y: 0 });
+
+  const playerSize = 40;
+  const mapLeft = 0;
+  const mapRight = 1560;
+  const groundY = 760;
+
+  const speed = 4;
+  const jumpForce = 9;
+
+  const gravity = 0.5;
+  const fallGravity = 0.25;
+
+  const holdBoost = 0.3;
+  const maxHold = 25;
+  const jumpHold = useRef(0);
+
+  const isColliding = (p, o) =>
+    p.x &lt; o.x + o.width &amp;&amp;
+    p.x + p.size > o.x &amp;&amp;
+    p.y &lt; o.y + o.height &amp;&amp;
+    p.y + p.size > o.y;
+
+  useEffect(() => {
+    let frame;
+
+    const loop = () => {
+      if (isBlocked) {
+        vel.current.x = 0;
+        vel.current.y = 0;
+        frame = requestAnimationFrame(loop);
+        return;
+      }
+      const k = keysRef.current;
+      const prev = posRef.current;
+
+      if (k.left) vel.current.x = -speed;
+      else if (k.right) vel.current.x = speed;
+      else vel.current.x = 0;
+
+      let newX = prev.x + vel.current.x;
+      let newY = prev.y + vel.current.y;
+
+      let onPlatform = false;
+
+      for (const o of obstacles) {
+        const standsOnTop =
+          prev.y + playerSize &lt;= o.y &amp;&amp;
+          newY + playerSize >= o.y &amp;&amp;
+          prev.x + playerSize > o.x &amp;&amp;
+          prev.x &lt; o.x + o.width;
+
+        if (standsOnTop) {
+          newY = o.y - playerSize;
+          vel.current.y = 0;
+          onPlatform = true;
+        }
+      }
+
+      const grounded = prev.y >= groundY - 1 || onPlatform;
+
+      if (k.jump &amp;&amp; grounded) {
+        vel.current.y = -jumpForce;
+        jumpHold.current = 0;
+      }
+
+      if (k.jump &amp;&amp; vel.current.y &lt; 0 &amp;&amp; jumpHold.current &lt; maxHold) {
+        vel.current.y -= holdBoost;
+        jumpHold.current++;
+      }
+
+      if (!k.jump &amp;&amp; vel.current.y &lt; 0) {
+        vel.current.y += fallGravity;
+      }
+
+      vel.current.y += gravity;
+
+      newY = prev.y + vel.current.y;
+
+      if (newX &lt; mapLeft) newX = mapLeft;
+      if (newX > mapRight) newX = mapRight;
+
+      if (newY > groundY) {
+        newY = groundY;
+        vel.current.y = 0;
+      }
+
+      const playerBox = { x: newX, y: newY, size: playerSize };
+
+      for (const o of obstacles) {
+        if (isColliding(playerBox, o)) {
+          if (prev.y + playerSize &lt;= o.y) {
+            newY = o.y - playerSize;
+            vel.current.y = 0;
+          } else if (prev.x + playerSize &lt;= o.x) {
+            newX = o.x - playerSize;
+          } else if (prev.x >= o.x + o.width) {
+            newX = o.x + o.width;
+          } else {
+            newY = o.y + o.height;
+            vel.current.y = 1;
+          }
+        }
+      }
+
+      setPos({ x: newX, y: newY });
+
+      frame = requestAnimationFrame(loop);
+    };
+
+    frame = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(frame);
+  }, [obstacles, isBlocked]);
+
+  return { pos, setPos };
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Cookies.html">Cookies</a></li><li><a href="module-Game.html">Game</a></li><li><a href="module-Hooks.html">Hooks</a></li><li><a href="module-Pages.html">Pages</a></li><li><a href="module-SettingsForm.html">SettingsForm</a></li><li><a href="module-UI.html">UI</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon Mar 16 2026 15:42:15 GMT+0200 (за східноєвропейським стандартним часом)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

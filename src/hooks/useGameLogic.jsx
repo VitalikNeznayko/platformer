@@ -9,6 +9,28 @@ import { useExitDoor } from "./useExitDoor";
 import { useSettingsStore } from "../store/SettingsStore";
 
 
+/**
+ * @module Hooks
+ */
+
+/**
+ * useGameLogic hook for managing the core game logic
+ *
+ * @param {Function} onFinish - Callback fired when the game finishes
+ * @returns {Object} - Hook API
+ * @returns {Object} return.pos - Player position
+ * @returns {number} return.level - Current level
+ * @returns {Array<Object>} return.money - Array of remaining money objects
+ * @returns {number} return.collected - Number of collected coins
+ * @returns {number} return.totalCoins - Total coins in the current level
+ * @returns {Array<Object>} return.obstacles - Obstacles in the current level
+ * @returns {Array<Object>} return.deadly - Deadly obstacles
+ * @returns {Object} return.exitDoor - Exit door position
+ * @returns {number} return.time - Current timer
+ * @returns {boolean} return.exitActive - Is exit door active
+ * @returns {string} return.gameOverMessage - Game over message
+ * @returns {Function} return.restart - Restart the level/game
+ */
 export const useGameLogic = (onFinish) => {
   const { settings } = useSettingsStore();
   const [timerKey, setTimerKey] = useState(0);

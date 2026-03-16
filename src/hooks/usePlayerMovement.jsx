@@ -1,6 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { useKeyboardControls } from "./useKeyboardControls";
+/**
+ * @module Hooks
+ */
 
+/**
+ * usePlayerMovement hook for managing player movement in the game
+ *
+ * @param {Array<Object>} [obstacles=[]] - Array of obstacle objects
+ * @param {Object} startPos - Starting position of the player {x, y}
+ * @param {boolean} [isBlocked=false] - Disable movement if true
+ * @returns {Object} - Hook API
+ * @returns {Object} return.pos - Current player position {x, y}
+ * @returns {Function} return.setPos - Setter for player position
+ */
 export const usePlayerMovement = (
   obstacles = [],
   startPos,

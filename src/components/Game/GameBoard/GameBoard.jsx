@@ -5,7 +5,22 @@ import Money from "../Money/Money";
 import Player from "../Player/Player";
 import ExitDoor from "../ExitDoor/ExitDoor";
 
+/**
+ * @module Game
+ */
 
+/**
+ * GameBoard component for displaying game elements and the player
+ *
+ * @param {Object} props - Component props
+ * @param {Object} props.pos - Player position
+ * @param {Array<Object>} [props.obstacles=[]] - List of obstacles
+ * @param {Array<Object>} [props.deadly=[]] - List of deadly objects
+ * @param {Array<Object>} [props.money=[]] - List of coins or money objects
+ * @param {Object} [props.exitDoor] - Exit door position
+ * @param {boolean} [props.exitActive] - Whether the exit is active
+ * @returns {JSX.Element}
+ */
 const GameBoard = ({
   pos,
   obstacles = [],

@@ -1,5 +1,18 @@
 import { useEffect } from "react";
 
+/**
+ * @module Hooks
+ */
+
+/**
+ * useExitDoor hook for detecting collisions with the exit door in the game
+ *
+ * @param {Object} pos - Player position
+ * @param {Object} exitZone - Exit door bounding box
+ * @param {Function} onExit - Callback when player reaches the exit
+ * @param {boolean} [isActive=true] - Whether the exit is active
+ * @returns {void}
+ */
 export const useExitDoor = (pos, exitZone, onExit, isActive) => {
   const playerSize = 40;
 

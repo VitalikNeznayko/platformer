@@ -5,6 +5,15 @@ import GameOverModal from "../../components/UI/Modal/GameOverModal";
 import { useState } from "react";
 import { useGameLogic } from "../../hooks/useGameLogic";
 
+/**
+ * @module Pages
+ */
+
+/**
+ * GamePage component for displaying the main game interface and handling game logic
+ *
+ * @returns {JSX.Element}
+ */
 const GamePage = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);

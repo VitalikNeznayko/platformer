@@ -1,5 +1,17 @@
 import { useEffect, useState } from "react";
 
+/**
+ * @module Hooks
+ */
+
+/**
+ * useKeyboardControls hook for handling keyboard controls in the game
+ *
+ * @returns {Object} keys - Current keyboard states
+ * @returns {boolean} keys.left - Is left key pressed
+ * @returns {boolean} keys.right - Is right key pressed
+ * @returns {boolean} keys.jump - Is jump key pressed
+ */
 export const useKeyboardControls = () => {
   const [keys, setKeys] = useState({
     left: false,

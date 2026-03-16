@@ -1,5 +1,17 @@
 import { useEffect } from "react";
 
+/**
+ * @module Hooks
+ */
+
+/**
+ * useDeadlyCollisions hook for detecting collisions with deadly objects in the game
+ *
+ * @param {Object} pos - Player position
+ * @param {Array<Object>} deadly - Array of deadly objects
+ * @param {Function} onDeath - Callback triggered when a collision occurs
+ * @returns {void}
+ */
 export const useDeadlyCollisions = (pos, deadly, onDeath) => {
   useEffect(() => {
     const playerSize = 40;

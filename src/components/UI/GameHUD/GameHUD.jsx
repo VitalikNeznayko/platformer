@@ -1,6 +1,21 @@
 import styles from "./GameHUD.module.css";
 import Button from "../Button/Button";
 
+/**
+ * @module UI
+ */
+
+
+/**
+ * GameHUD component for displaying game information and controls
+ * @param {Object} props - Component props
+ * @param {number} props.level - Current game level
+ * @param {number} props.collected - Number of collected items
+ * @param {number} props.total - Total items in the level
+ * @param {number} props.time - Elapsed time in seconds
+ * @param {Function} props.onBack - Callback for returning to the menu
+ * @returns {JSX.Element}
+ */
 const GameHUD = ({ level, collected, total, time, onBack }) => {
   return (
     <div className={styles.hud}>

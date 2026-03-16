@@ -6,6 +6,14 @@ import Button from "../UI/Button/Button";
 import { useEffect } from "react";
 import styles from "./SettingsForm.module.css";
 
+/**
+ * @module SettingsForm
+ */
+
+/**
+ * PresetSync component for synchronizing form values with selected difficulty presets
+ * @returns {JSX.Element}
+ */
 const PresetSync = () => {
   const { values, setFieldValue } = useFormikContext();
 
@@ -20,6 +28,13 @@ const PresetSync = () => {
 
   return null;
 };
+
+/**
+ * SettingsForm component for displaying and managing game settings
+ * @param {Object} props - Component props
+ * @param {Function} props.onBack - Callback function to navigate back
+ * @returns {JSX.Element}
+ */
 
 const SettingsForm = ({ onBack }) => {
   const { settings, setSettings } = useSettingsStore();

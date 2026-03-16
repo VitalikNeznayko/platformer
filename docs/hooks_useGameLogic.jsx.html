@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: hooks/useGameLogic.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: hooks/useGameLogic.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from "react";
+import { LEVELS } from "../config/levels";
+
+import { useLevelFlow } from "./useLevelFlow";
+import { usePlayerMovement } from "./usePlayerMovement";
+import { useMoney } from "./useMoney";
+import { useDeadlyCollisions } from "./useDeadlyCollisions";
+import { useExitDoor } from "./useExitDoor";
+import { useSettingsStore } from "../store/SettingsStore";
+
+
+/**
+ * @module Hooks
+ */
+
+/**
+ * useGameLogic hook for managing the core game logic
+ *
+ * @param {Function} onFinish - Callback fired when the game finishes
+ * @returns {Object} - Hook API
+ * @returns {Object} return.pos - Player position
+ * @returns {number} return.level - Current level
+ * @returns {Array&lt;Object>} return.money - Array of remaining money objects
+ * @returns {number} return.collected - Number of collected coins
+ * @returns {number} return.totalCoins - Total coins in the current level
+ * @returns {Array&lt;Object>} return.obstacles - Obstacles in the current level
+ * @returns {Array&lt;Object>} return.deadly - Deadly obstacles
+ * @returns {Object} return.exitDoor - Exit door position
+ * @returns {number} return.time - Current timer
+ * @returns {boolean} return.exitActive - Is exit door active
+ * @returns {string} return.gameOverMessage - Game over message
+ * @returns {Function} return.restart - Restart the level/game
+ */
+export const useGameLogic = (onFinish) => {
+  const { settings } = useSettingsStore();
+  const [timerKey, setTimerKey] = useState(0);
+  const { level, nextLevel, restartGame } = useLevelFlow(onFinish);
+  const config = LEVELS[level];
+  const maxLevel = Object.keys(LEVELS).length;
+
+  const [isGameOver, setIsGameOver] = useState(false);
+  const { pos, setPos } = usePlayerMovement(
+    config.obstacles,
+    config.playerStart,
+    isGameOver
+  );
+  const { money, setMoney, updateMoney, collected, resetCollected } =
+    useMoney();
+
+  const [time, setTime] = useState(0);
+
+  const [gameOverMessage, setGameOverMessage] = useState("");
+
+  useEffect(() => {
+    let interval;
+
+    if (!settings.timeLimited) {
+      interval = setInterval(() => setTime((t) => t + 1), 1000);
+    } else {
+      setTime(settings.timeLimit);
+
+      interval = setInterval(() => {
+        setTime((t) => {
+          if (t &lt;= 1) {
+            clearInterval(interval);
+            setIsGameOver(true);
+            setGameOverMessage("Time is up!");
+            onFinish();
+            return 0;
+          }
+          return t - 1;
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [timerKey, settings.timeLimited]);
+
+  useEffect(() => {
+    resetCollected();
+    setPos(config.playerStart);
+    setMoney(config.money);
+  }, [level]);
+
+  useEffect(() => {
+    updateMoney(pos);
+  }, [pos]);
+
+  useDeadlyCollisions(pos, config.deadly, () => {
+    resetCollected();
+    setMoney(config.money);
+    setPos(config.playerStart);
+  });
+
+  useExitDoor(pos, config.exitDoor, () => {
+    const totalCoins = config.money.length;
+
+    if (settings.coinsRequired &amp;&amp; collected !== totalCoins) return;
+
+    if (level === maxLevel) {
+      setIsGameOver(true);
+      setGameOverMessage("All levels completed!");
+      onFinish();
+      return;
+    }
+
+    nextLevel(level);
+  });
+
+  const restart = () => {
+    restartGame();
+    setIsGameOver(false);
+    setGameOverMessage("");
+    setTime(settings.timeLimit);
+    setTimerKey((k) => k + 1);
+    resetCollected();
+    setMoney(config.money);
+    setPos(config.playerStart);
+  };
+  const totalCoins = config.money.length;
+  const exitActive = !settings.coinsRequired || collected === totalCoins;
+
+  return {
+    pos,
+    level,
+    money,
+    collected,
+    totalCoins,
+    obstacles: config.obstacles,
+    deadly: config.deadly,
+    exitDoor: config.exitDoor,
+    time,
+    exitActive,
+    gameOverMessage,
+    restart,
+  };
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Cookies.html">Cookies</a></li><li><a href="module-Game.html">Game</a></li><li><a href="module-Hooks.html">Hooks</a></li><li><a href="module-Pages.html">Pages</a></li><li><a href="module-SettingsForm.html">SettingsForm</a></li><li><a href="module-UI.html">UI</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon Mar 16 2026 15:42:15 GMT+0200 (за східноєвропейським стандартним часом)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -4,6 +4,15 @@ import SettingsForm from "../../components/SettingsForm/SettingsForm";
 
 import styles from "./SettingPage.module.css";
 
+/**
+ * @module Pages
+ */
+
+/**
+ * SettingPage component for displaying game settings and allowing users to customize their experience
+ *
+ * @returns {JSX.Element}
+ */
 const SettingPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();

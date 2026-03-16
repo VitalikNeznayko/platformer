@@ -4,7 +4,7 @@ import { getUserId } from "./utils/getUserId";
 import StartPage from "./pages/StartPage/StartPage";
 import GamePage from "./pages/GamePage/GamePage";
 import SettingPage from "./pages/SettingPage/SettingPage";
-import GDPRPopup from "./components/UI/GDPRPopup/GDPRPopup";
+import GDPRPopup from "./components/GDPRPopup/GDPRPopup";
 
 function App() {
   const userId = getUserId();
