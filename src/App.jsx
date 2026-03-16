@@ -4,6 +4,7 @@ import { getUserId } from "./utils/getUserId";
 import StartPage from "./pages/StartPage/StartPage";
 import GamePage from "./pages/GamePage/GamePage";
 import SettingPage from "./pages/SettingPage/SettingPage";
+import GDPRPopup from "./components/GDPRPopup";
 
 function App() {
   const userId = getUserId();
@@ -12,11 +13,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<StartPage userId={userId} />} />
-
         <Route path="/:id" element={<StartPage />} />
         <Route path="/:id/game" element={<GamePage />} />
         <Route path="/:id/settings" element={<SettingPage />} />
       </Routes>
+      <GDPRPopup />
     </BrowserRouter>
   );
 }

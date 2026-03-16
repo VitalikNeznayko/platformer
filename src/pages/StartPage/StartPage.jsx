@@ -2,7 +2,6 @@ import { useNavigate, useParams} from "react-router-dom";
 import Button from "../../components/UI/Button/Button";
 import Title from "../../components/UI/Title/Title";
 import styles from "./StartPage.module.css";
-import { current } from "@reduxjs/toolkit";
 
 const StartPage = ({ userId }) => {
   const { id } = useParams();
