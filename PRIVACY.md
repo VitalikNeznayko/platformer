@@ -1,8 +1,7 @@
-# Privacy Policy & User Instructions (GDPR)
+# Privacy Policy & User Instruction
 
-**Author:** Vitalii Neznaiko  
-**Group:** ВТк-24-1  
-**Project:** Platformer  
+## Introduction
+This document explains how the Platformer project handles user data, cookies, and usage instructions. It is intended to help users understand their rights and responsibilities while using the software.
 
 ---
 
