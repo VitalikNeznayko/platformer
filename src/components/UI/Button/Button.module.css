@@ -8,8 +8,18 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .btn:hover {
     background-color: rgb(52, 113, 100);
+}
+
+.btn.disabled {
+    background-color: #444;
+    cursor: not-allowed;
+}
+
+.btn.disabled:hover {
+    background-color: #292929;
 }
